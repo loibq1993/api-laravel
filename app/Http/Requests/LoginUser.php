@@ -2,13 +2,13 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
-class   StoreProduct extends FormRequest
+class LoginUser extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +17,7 @@ class   StoreProduct extends FormRequest
      */
     public function authorize()
     {
-        return true ;
+        return true;
     }
 
     /**
@@ -28,25 +28,20 @@ class   StoreProduct extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:products|max:255',
-            'image' => 'required|image|max:2048|mimes:jpeg,png,jpg,gif,svg',
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+            'remember_me' => 'boolean'
         ];
     }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
     public function messages()
     {
         return [
-            'name.required' => 'Tên sản phẩm không được để trống',
-            'image.required'  => 'Ảnh sản phẩm không được để trống',
-            'name.unique' => 'Đã có sản phẩm cùng tên trong dữ liệu',
-            'image.image' => 'Ảnh phải là định dạng jpeg, png, jpg, gif, svg',
-            'image.mimes' => 'Ảnh phải là định dạng jpeg, png, jpg, gif, svg',
-            'image.max' => 'Dung lượng ảnh phải nhỏ hơn 2MB',
+            'email.required' => 'Email không được để trống',
+            'email.max' => 'Email không nên vượt quá 255 ký tự',
+            'email.email' => "Không đúng định dạng email",
+            'password.required' => 'Password không được để trống',
+            'password.min' => 'Password phải nhiều hơn 8 ký tự'
         ];
     }
 
