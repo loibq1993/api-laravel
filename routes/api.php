@@ -13,11 +13,24 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::resource('product', 'ProductController');
+//Route::post('login', 'PassportController@login');
+//Route::post('register', 'PassportController@register');
 
-Route::get('/csrf', function () {
-    return response()->json(csrf_token(), 201);
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', 'PassportController@login');
+    Route::post('signup', 'PassportController@signup');
+
+    Route::group([
+        'middleware' => 'auth:api'
+    ], function() {
+        Route::get('logout', 'PassportController@logout');
+        Route::get('user', 'PassportController@user');
+    });
 });
+//Route::middleware('auth:api')->group(function () {
+//    Route::get('user', 'PassportController@details');
+
+    Route::resource('product', 'ProductController');
+//});

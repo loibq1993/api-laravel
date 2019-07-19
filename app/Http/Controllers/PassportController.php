@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginUser;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -20,8 +20,14 @@ class PassportController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users'
+            ],
+            'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 
         $user = User::create([
@@ -54,13 +60,16 @@ class PassportController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ];
-        $getUserByEmail = User::where('email',$request->email)->first();
-        $getUserByPassword = User::where('password',Hash::make($request->newPassword))->first();
+        $getUserByEmail = User::where('email', $request->email)->first();
+        $getUserByPassword = User::where(
+            'password',
+            Hash::make($request->newPassword)
+        )->first();
         if (auth()->attempt($credentials)) {
             $user = $request->user();
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;
-            if ($request->remember_me){
+            if ($request->remember_me) {
                 $token->expires_at = Carbon::now()->addWeeks(1);
             }
             $token->save();
@@ -73,11 +82,17 @@ class PassportController extends Controller
                 'status' => 200
             ]);
         } else {
-            if(!$getUserByEmail){
-                return response()->json(['error' => ['email' => 'Email không chính xác']], 401);
+            if (!$getUserByEmail) {
+                return response()->json(
+                    ['error' => ['email' => 'Email không chính xác']],
+                    401
+                );
             }
-            if(!$getUserByPassword){
-                return response()->json(['error' => ['password' => "Password không chính xác"]], 401);
+            if (!$getUserByPassword) {
+                return response()->json(
+                    ['error' => ['password' => "Password không chính xác"]],
+                    401
+                );
             }
         }
     }
@@ -88,7 +103,10 @@ class PassportController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
+        $request
+            ->user()
+            ->token()
+            ->revoke();
 
         return response()->json([
             'message' => 'Successfully logged out'
