@@ -1,28 +1,63 @@
 <?php
 
-namespace App\Repositories\Contracts;
+namespace App\Repositories;
 
 interface RepositoryInterface
 {
-    public function where($conditions, $operator = null, $value = null);
+    /**
+     * Get all
+     * @return mixed
+     */
+    public function getAll();
 
-    public function orWhere($conditions, $operator = null, $value = null);
+    /**
+     * Get one
+     * @param $id
+     * @return mixed
+     */
+    public function find($id);
 
-    public function count();
-    
-    public function get($columns = ['*']);
+    /**
+     * Create
+     * @param array $attributes
+     * @return mixed
+     */
+    public function create(array $attributes);
 
-    public function lists($column, $key = null);
+    /**
+     * Update
+     * @param $id
+     * @param array $attributes
+     * @return mixed
+     */
+    public function update($id, array $attributes);
 
-    public function paginate($perPage = 20, $columns = ['*']);
-
-    public function find($id, $columns = ['*']);
-
-    public function create(array $data);
-
-    public function update(array $data, $id, $attribute = 'id', $withSoftDeletes = false);
-
+    /**
+     * Delete
+     * @param $id
+     * @return mixed
+     */
     public function delete($id);
 
-    public function deleteAll();
+    /**
+     * Get data with paginate
+     *
+     * @param int|NULL $perPage
+     * @param bool     $orderBy
+     * @param array    $column
+     *
+     * @return mixed
+     */
+    public function getPaginate(int $perPage = null, bool $orderBy = true, array $column = ['*']);
+
+    /**
+     * Get data with where
+     *
+     * @param string $conditions
+     * @param NULL $operator
+     * @param string $value
+     *
+     *
+     */
+    public function findWhere(array $where, bool $getFirst = false);
 }

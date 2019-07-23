@@ -6,13 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Requests\StoreProduct;
 use App\Http\Requests\EditProduct;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('auth:api');
-//    }
+
+    protected $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+        // $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,10 +26,10 @@ class ProductController extends Controller
 
     public function index()
     {
-        $i=1;
-        $products = Product::where('active',1)->orderBy('id','desc')->get();
-//        return view('/product/index',compact('products','i'));
-        return response()->json($products,200);
+        $product = $this->productService->getAll();
+
+        return response()->json($product, 201);
+        // return view('product.index', compact('product'));
     }
 
     /**
@@ -43,20 +48,16 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-        public function store(StoreProduct $request)
+    public function store(StoreProduct $request)
     {
-        $image = $request->image;
-        $imageName = time().'.'.$image->getClientOriginalExtension();
-        $destinationPath = public_path('/images');
-        $image->move($destinationPath, $imageName);
-
-        $product = Product::create([
+        $data = $request->only([
             'name' => $request->name,
-            'image' => $imageName,
+            'image' => $request->image,
             'description' => $request->description,
             'quantity' => $request->quantity
         ]);
-
+        $product = $this->productService->store($data);
+        
         return response()->json($product, 201);
 //        return redirect('/product');
     }
@@ -80,7 +81,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
+        $product = $this->productService->find($id);
+
 //        return view('product/edit',compact('product'));
         return response()->json($product, 200);
     }
@@ -123,9 +125,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::where('id',$id)->update([
-            'active' => 0
-        ]);
+        $this->productService->delete($id);
 //        return redirect('/product');
         return response()->json(null, 200);
     }
