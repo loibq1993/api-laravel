@@ -10,6 +10,13 @@ use Carbon\Carbon;
 
 class PassportController extends Controller
 {
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+        // $this->middleware('auth:api');
+    }
+
     /**
      * Handles Registration Request
      *
@@ -30,12 +37,13 @@ class PassportController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 
-        $user = User::create([
+        $data = $request->only([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
 
+        $this->userService->create($data);
         $token = $user->createToken('TutsForWeb')->accessToken;
 
         return response()->json([
@@ -60,11 +68,8 @@ class PassportController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ];
-        $getUserByEmail = User::where('email', $request->email)->first();
-        $getUserByPassword = User::where(
-            'password',
-            Hash::make($request->newPassword)
-        )->first();
+        $getUserByEmail = $this->userService->findWhere($request->password, true);
+        $getUserByPassword = $this->userService->findWhere(['password' => Hash::make($request->password)], true);
         if (auth()->attempt($credentials)) {
             $user = $request->user();
             $tokenResult = $user->createToken('Personal Access Token');
