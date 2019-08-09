@@ -22,3 +22,5 @@ Route::resource('product', 'ProductController');
 Route::get('/csrf', function () {
     return response()->json(csrf_token(), 201);
 });
+
+Route::resource('category', 'CategoryController');

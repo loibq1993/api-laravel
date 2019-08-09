@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\Repositories\ProductRepository\ProductEloquentRepository;
 use App\Repositories\ProductRepository\ProductRepositoryInterface;
+use App\Repositories\CategoryRepository\CategoryEloquentRepository;
+use App\Repositories\CategoryRepository\CategoryRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ProductRepositoryInterface::class,
             ProductEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            CategoryRepositoryInterface::class,
+            CategoryEloquentRepository::class
         );
     }
 

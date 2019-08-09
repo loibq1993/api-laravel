@@ -17,7 +17,7 @@ class CreateSuppliersTable extends Migration
             $table->bigIncrements('id');
             $table->string('company_name');
             $table->string('short_name')->nullable();
-            $table->sring('address')->nullable();
+            $table->string('address')->nullable();
             $table->string('phone');
             $table->string('fax')->nullable();
             $table->string('website')->nullable();

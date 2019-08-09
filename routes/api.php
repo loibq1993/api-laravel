@@ -33,4 +33,5 @@ Route::group([
 //    Route::get('user', 'PassportController@details');
 
     Route::resource('product', 'ProductController');
+    Route::resource('category', 'CategoryController');
 //});
