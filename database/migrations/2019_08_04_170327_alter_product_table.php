@@ -20,7 +20,6 @@ class AlterProductTable extends Migration
             $table->string('SKU');
             $table->unsignedBigInteger('supplier_id');
             $table->dropColumn('quantity');
-            $table->unsignedBigInteger('supplier_id');
         });
     }
 
