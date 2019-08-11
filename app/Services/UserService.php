@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\UserReporitory\UserReporitoryInterface;
+use App\Repositories\UserRepository\UserRepositoryInterface;
 
 /**
  * Class UserService
@@ -23,6 +23,6 @@ class UserService
 
     public function findWhere($where, bool $getFirst = false)
     {
-        $this->repository->create($data);
+        $this->repository->findWhere($data);
     }
 }

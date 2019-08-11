@@ -131,6 +131,6 @@ abstract class EloquentRepository implements RepositoryInterface
             return $query->first();
         }
 
-        return $query->get();
+        return $query;
     }
 }

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use App\Services\UserService;
 
 class PassportController extends Controller
 {
@@ -68,8 +69,8 @@ class PassportController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ];
-        $getUserByEmail = $this->userService->findWhere($request->password, true);
-        $getUserByPassword = $this->userService->findWhere(['password' => Hash::make($request->password)], true);
+        $getUserByEmail = $this->userService->findWhere($request->password, true)->get();
+        $getUserByPassword = $this->userService->findWhere(['password' => Hash::make($request->password)], true)->get();
         if (auth()->attempt($credentials)) {
             $user = $request->user();
             $tokenResult = $user->createToken('Personal Access Token');
