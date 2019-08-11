@@ -8,6 +8,8 @@ use App\Repositories\ProductRepository\ProductEloquentRepository;
 use App\Repositories\ProductRepository\ProductRepositoryInterface;
 use App\Repositories\CategoryRepository\CategoryEloquentRepository;
 use App\Repositories\CategoryRepository\CategoryRepositoryInterface;
+use App\Repositories\UserRepository\UserEloquentRepository;
+use App\Repositories\UserRepository\UserRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             CategoryRepositoryInterface::class,
             CategoryEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            UserRepositoryInterface::class,
+            UserEloquentRepository::class
         );
     }
 
