@@ -18,7 +18,7 @@ use Faker\Generator as Faker;
 $factory->define(Category::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'photo' => str_slug($faker->name, '-').'.png',
+        'feature_image' => str_slug($faker->name, '-').'.png',
         'description' => $faker->sentence,
         'slug' => str_slug($faker->name, '-'),
         'status' => array_rand(array(0,1)),
