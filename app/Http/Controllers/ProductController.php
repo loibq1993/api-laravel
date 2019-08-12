@@ -26,10 +26,10 @@ class ProductController extends Controller
 
     public function index()
     {
-        $product = $this->productService->getAll();
-
-        return response()->json($product, 201);
-        // return view('product.index', compact('product'));
+        $products = $this->productService->getAll();
+        $i = 1;    
+        // return response()->json($product, 201);
+        return view('product.index', compact('products', 'i'));
     }
 
     /**
@@ -58,8 +58,8 @@ class ProductController extends Controller
         ]);
         $product = $this->productService->store($data);
         
-        return response()->json($product, 201);
-//        return redirect('/product');
+        // return response()->json($product, 201);
+        return redirect('/product');
     }
 
     /**
@@ -83,8 +83,8 @@ class ProductController extends Controller
     {
         $product = $this->productService->find($id);
 
-//        return view('product/edit',compact('product'));
-        return response()->json($product, 200);
+        return view('product/edit',compact('product'));
+        // return response()->json($product, 200);
     }
 
     /**
@@ -113,8 +113,8 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->quantity = $request->quantity;
         $product->save();
-//        return redirect('/product');
-        return response()->json($product, 200);
+        return redirect('/product');
+        // return response()->json($product, 200);
     }
 
     /**
@@ -126,7 +126,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $this->productService->delete($id);
-//        return redirect('/product');
-        return response()->json(null, 200);
+        return redirect('/product');
+        // return response()->json(null, 200);
     }
 }
