@@ -14,7 +14,6 @@ class CategoryController extends Controller
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
-        // $this->middleware('auth:api');
     }    
     
     /**
@@ -24,7 +23,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $where = ['status','=', 1];
+        $where = ['status','=', array_keys(__('category.status.option'))[1]];
         $categories = $this->categoryService->findWhere([$where])->paginate(10);
         return view('category.index', compact('categories'));
     }
