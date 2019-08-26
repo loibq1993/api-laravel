@@ -24,3 +24,4 @@ Route::get('/csrf', function () {
 });
 
 Route::resource('category', 'CategoryController');
+Route::resource('supplier', 'SupplierController');

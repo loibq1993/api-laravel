@@ -62,7 +62,7 @@
                             <label class="control-label" for="parent">{{__('category.parent_id')}}</label>
                             <div class="input-group">
                                 <select class="form-control" id="parent" name="parent">
-                                    <option>{{__('category.placeholder.parent_id')}}</option>
+                                    <option value="">{{__('category.placeholder.parent_id')}}</option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
