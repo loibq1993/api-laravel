@@ -11,6 +11,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .rnd
+public/images
 .idea/
 package-lock.json
 .php_cs.cache
