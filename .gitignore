@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/images
 /storage/*.key
 /vendor
 .env
@@ -11,5 +12,6 @@ npm-debug.log
 yarn-error.log
 .rnd
 public/images
+.idea/
 package-lock.json
 .php_cs.cache
