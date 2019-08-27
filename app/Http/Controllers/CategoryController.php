@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = $this->categoryService->getAll();
-        return view('category.create', compact('categories'));
+        return view('category.backend.create', compact('categories'));
     }
 
     /**
@@ -82,7 +82,7 @@ class CategoryController extends Controller
         $category = $this->categoryService->find($id);
         $categories = $this->categoryService->getAll();
 
-        return view('category.edit', compact('category', 'categories'));
+        return view('category.backend.edit', compact('category', 'categories'));
     }
 
     /**

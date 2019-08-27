@@ -26,7 +26,7 @@ class SupplierController extends Controller
     {
         $where = ['status','=', array_keys(__('category.status.option'))[1]];
         $suppliers = $this->supplierService->findWhere([$where])->paginate(10);
-        return view('supplier.index', compact('suppliers'));
+        return view('supplier.backend.index', compact('suppliers'));
     }
 
     /**
@@ -36,7 +36,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('supplier.create');
+        return view('supplier.backend.create');
     }
 
     /**
@@ -73,7 +73,7 @@ class SupplierController extends Controller
     {
         $supplier = $this->supplierService->find($id);
 
-        return view('supplier.edit', compact('supplier'));
+        return view('supplier.backend.edit', compact('supplier'));
     }
 
     /**

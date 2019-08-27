@@ -29,7 +29,7 @@ class ProductController extends Controller
         $products = $this->productService->getAll();
         $i = 1;    
         // return response()->json($product, 201);
-        return view('product.index', compact('products', 'i'));
+        return view('product.backend.index', compact('products', 'i'));
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product/create');
+        return view('product.backend.create');
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductController extends Controller
     {
         $product = $this->productService->find($id);
 
-        return view('product/edit',compact('product'));
+        return view('product.backend.edit',compact('product'));
         // return response()->json($product, 200);
     }
 

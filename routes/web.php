@@ -16,12 +16,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::resource('product', 'ProductController');
-
-Route::get('/csrf', function () {
-    return response()->json(csrf_token(), 201);
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => 'auth'
+], function() {
+    Route::resource('product', 'ProductController');
+    Route::get('/csrf', function () {
+        return response()->json(csrf_token(), 201);
+    });
+    Route::resource('category', 'CategoryController');
+    Route::resource('supplier', 'SupplierController');
 });
-
-Route::resource('category', 'CategoryController');
-Route::resource('supplier', 'SupplierController');
